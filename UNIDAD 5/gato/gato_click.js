@@ -1,82 +1,120 @@
-// Usamos clases y las vistas son dinámicas
-
-class gato
-{
-    constructor(nombre, imagen)
+  
+// MODELO---------------------------------------------------------------------
+class gatito {
+    constructor(imagenId, nombre)
     {
+        this.numClicks = 0;  
         this.nombre = nombre;
-        this.imagen = imagen;
-        this.contadorClicks=0;
+        this.imagen = imagenId;    
+    }
+}
+
+class ModeloDatos{
+    constructor(){
+        this.gatos = new Array();
+        this.gatos.push(new gatito("./gato1.jpg", "misifu"));
+        this.gatos.push(new gatito("./gato2.jpg","luna"));
+        this.gatos.push(new gatito("./gato3.jpg","alita"));
+        this.gatos.push(new gatito("./gato4.jpg","lorita"));
+        this.gatos.push(new gatito("./gato5.jpg","jose"));
+
+        this.seleccionado = null;       
     }
 
-   vista_imagen()
+    set gatoSeleccionado(numero){
+        this.seleccionado = this.gatos[numero];
+    }
+
+    get gatoSeleccionado(){
+        return this.seleccionado;
+    }
+}
+//--------------------------------------------------------------------------------------------------------
+// VISTA -------------------------------------------------------------------------------------------------
+
+class listaGatosView {
+    constructor(controlador){
+        this.lista = document.getElementById("listaGatos");
+        this.controlador = controlador;
+        this.mostrar();
+    }
+
+    mostrar(){
+        // Obtener array de gatos
+        this.gatos = this.controlador.getLista;
+
+        // Crear lista
+        this.gatos.forEach( (gato, indice) => {
+            var item = document.createElement("li");
+            item.innerText = gato.nombre;
+            item.id = indice;
+
+            // Asociar evento con cada entrada de la lista (cada nombre de gato)
+            item.addEventListener("click", (e) => {
+                this.controlador.setGatoSeleccionado = e.target.id;                     
+              });gatoSeleccionado
+
+            this.lista.appendChild(item);        
+        });  
+    }
+}
+class gatoSeleccionadoView {
+    constructor(controlador)
     {
-        // Se muestra imagen y contador
-         this.div = document.createElement("div");
-         let img = document.createElement("img");
-         img.src = this.imagen;
-         this.div.appendChild(img);
-         let  texto = document.createTextNode(this.contadorClicks);
-         this.div.appendChild(texto);
+        this.controlador = controlador;
 
-         img.addEventListener("click", ()=>{
-            this.contadorClicks++;
-            this.div.childNodes[1].textContent = this.contadorClicks;
-         });
+        this.etiquetaNombre = document.getElementById("nombreGato");
+        this.etiquetaNumClicks = document.getElementById("numeroClicks");
+        this.imagen = document.getElementById("imagenGato");
 
-         return this.div;
+        this.imagen.addEventListener("click", () => {
+            this.controlador.incrementaContador();
+        })
     }
 
-    vista_nombre(contenedor){
-        // Se muestra sólo nombre
-        let entradaLista = document.createElement("li");
-        entradaLista.textContent = this.nombre;
-
-        entradaLista.addEventListener("click", ()=>{
-            contenedor.innerHTML="";
-            contenedor.appendChild(this.vista_imagen());
-          
-        });
-        
-        return entradaLista;
+    mostrar()
+    {
+        let gatoSeleccionado = this.controlador.getGatoSeleccionado;
+        this.etiquetaNombre.textContent = gatoSeleccionado.nombre;
+        this.etiquetaNumClicks.textContent = gatoSeleccionado.numClicks;
+        this.imagen.src = gatoSeleccionado.imagen;        
     }
 }
 
+//--------------------------------------------------------------------------------------------------------
+// CONTROLADOR  -------------------------------------------------------------------------------------------------
+class controlador{
+    constructor()
+    {
+        this.modelo = new ModeloDatos();
+        this.vistaLista = new listaGatosView(this);
+        this.vistaGato = new gatoSeleccionadoView(this);      
+    }
 
-var gatos = [];
-window.onload = ()=>
-{
-    let gatico = new gato("Misifu","g1.jpg")
-    let gatico2 = new gato("Leon","g2.jpg")
-    gatos.push( gatico );
-    gatos.push( gatico2 );
-    document.body.appendChild( vista_2() );
+    get getLista()
+    {
+        return this.modelo.gatos;
+    }
 
+    get getGatoSeleccionado()
+    {
+        return this.modelo.gatoSeleccionado;
+    }
+
+    set setGatoSeleccionado(numero)
+    {
+        this.modelo.gatoSeleccionado = numero;
+        this.vistaGato.mostrar();
+    }
+
+    incrementaContador(){
+        this.modelo.gatoSeleccionado.numClicks++;
+        this.vistaGato.mostrar();
+    }
 }
 
-function vista_1()
-{
-    let div = document.createElement("div");
-    // Se muestra imagen y contador
-    for (gato of gatos)
-        div.appendChild(gato.vista_imagen());
-    
-    
-    return div;
-}
+//--------------------------------------------------------------------------------------------------------
 
-function vista_2()
-{
-    
-    let div = document.createElement("div");
-    let contenedor = document.createElement("div")
-    let lista = document.createElement("ul");
-    // Se muestra imagen y contador
-    for (gato of gatos)
-        lista.appendChild(gato.vista_nombre(contenedor));
-    
-    div.appendChild(lista);
-    div.appendChild(contenedor);
-   
-    return div;
+window.onload = () => {
+    controlador = new controlador();
 }
