@@ -56,7 +56,7 @@ speed: 1,
 movimiento: 1
 })
 
-function input() 
+function teclas() 
 {
 if (87 in keys) {
     if (jugador1.y - jugador1.movimiento > 0) {
@@ -147,8 +147,8 @@ drawBox(Bola);
 function loop() 
 {
 Rebote();
-input(jugador1);
-input(jugador2);
+teclas(jugador1);
+teclas(jugador2);
 window.requestAnimationFrame(loop);
 }
 loop();
