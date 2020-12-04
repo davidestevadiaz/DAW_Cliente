@@ -19,13 +19,13 @@ delete keys[e.keyCode];
 
 function Box(opciones) 
 {
-this.x = opciones.x || 10;
-this.y = opciones.y || 10;
-this.width = opciones.width || 40;
-this.height = opciones.height || 50;
-this.color = opciones.color || '#FFFFFF';
-this.speed = opciones.speed || 2;
-this.movimiento = opciones.movimiento || 2;
+    this.x = opciones.x || 10;
+    this.y = opciones.y || 10;
+    this.width = opciones.width || 40;
+    this.height = opciones.height || 50;
+    this.color = opciones.color || '#FFFFFF';
+    this.speed = opciones.speed || 2;
+    this.movimiento = opciones.movimiento || 2;
 }
 
 var jugador1 = new Box({
@@ -33,7 +33,7 @@ x: 10,
 y: 200,
 width: 15,
 height: 80,
-color: '#FFFFFF',
+color: '#2271b3',
 movimiento: 2
 });
 
@@ -42,7 +42,7 @@ x: 625,
 y: 100,
 width: 15,
 height: 80,
-color: '#FFFFFF',
+color: '#2271b3',
 movimiento: 2
 });
 
@@ -80,24 +80,24 @@ if (87 in keys) {
 
 function drawBox(box) 
 {
-ctx.fillStyle = box.color;
-ctx.fillRect(box.x, box.y, box.width, box.height);
+    ctx.fillStyle = box.color;
+    ctx.fillRect(box.x, box.y, box.width, box.height);
 }
 
 function Puntuacion1() 
 {
-ctx.font = "20px Arial";
-ctx.fillStyle = "rgb(255,255,255)";
-var str1 = puntuacion1;
-ctx.fillText(str1, (canvas.width/2) - 50, 30);
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#ffbf00";
+    var str1 = puntuacion1;
+    ctx.fillText(str1, (canvas.width/2) - 50, 30);
 }
 
 function Puntuacion2() 
 {
-ctx.font = "20px Arial";
-ctx.fillStyle = "rgb(255,255,255)";
-var str2 = puntuacion2;
-ctx.fillText(str2, (canvas.width / 2) + 50, 30);
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#ffbf00";
+    var str2 = puntuacion2;
+    ctx.fillText(str2, (canvas.width / 2) + 50, 30);
 }
 
 function Rebote() 
