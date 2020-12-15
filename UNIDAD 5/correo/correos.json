@@ -1,0 +1,16 @@
+{
+"listaCorreos":[
+    {
+        "remitente":"David",
+        "asunto":"Nochebuena",
+        "texto":"Borrachera en mi casa",
+        "fecha":"15/12"
+    },
+    {
+        "remitente":"David",
+        "asunto":"Nochevieja",
+        "texto":"Borrachera en el cotijo de Paula",
+        "fecha":"15/12"
+    }
+]
+}
