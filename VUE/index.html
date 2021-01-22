@@ -9,21 +9,28 @@
 <body>
     <div id="miAplicacion">
         <input v-on:keyup.enter="anadirRecordatorio" v-on:keyup="teclaPulsada" v-model="nuevoRecordatorio">
-        
-        <p>{{totalCompletados}} completadas de {{total}}</p>
+
+        <p>Filtrar tareas :<input v-model="empiezaPor"></p>
+
+        <p>{{totalPendientes}} Tareas pendientes de {{totalTareas}} tareas totales</p>
 
         <button v-on:click="anadirRecordatorio">Nuevo Recordatorio</button>
-        
-        <button v-bind:disabled="isButtonDisabled">Nuevo Recordatorio</button>
-          
-          <div v-for="(recordatorio, index) in listaRecordatorio">
-            {{recordatorio.titulo}}, esta tarea está completada {{recordatorio.completado}}, 
-            tiene prioridad {{recordatorio.prioridad}} y fue creada el día {{recordatorio.fechaCreacion.getDate()}}
-         
-          <button v-on:click="cambiarEstadoTarea(index)">Borrar</button>
-          
-          </div>
 
+        <button v-on:click="eliminarTareasCompletadas">Borrar tareas completadas</button>
+
+        <br> <br>
+
+        <div  v-for="(recordatorio, index) in listaRecordatorioFiltrada" v-bind:key="recordatorio"
+            v-bind:key="recordatorio+index"
+            v-bind:class="{completadoClase: recordatorio.completado}">
+            {{recordatorio.titulo}} La tarea tiene prioridad {{recordatorio.prioridad}} creado en {{recordatorio.fechaCreacion.getDate()}} y la tarea esta {{recordatorio.completado}}
+        
+        <button v-on:click="eliminarTarea">Eliminar tarea</button>
+
+        <button v-on:click="cambiarCompletado(index)">¿Tarea Completada?</button>
+
+        <br>
+    </div>
     </div>
     <script src="index.js"></script>
 </body>
